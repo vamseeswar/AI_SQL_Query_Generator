@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI SQL Query Generator – Convert natural language to SQL using Groq LLM" />
+    <title>AI SQL Query Generator</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+    <!-- ===== Animated background blobs ===== -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- ===== Main container ===== -->
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <h1>AI SQL Query Generator</h1>
+            </div>
+            <p class="subtitle">Convert plain English into SQL — powered by Groq LLM</p>
+        </header>
+
+        <!-- Input card -->
+        <section class="card input-card" id="input-section">
+            <h2 class="card-title">
+                <span class="card-icon">💬</span>
+                Ask a Question
+            </h2>
+            <textarea
+                id="question-input"
+                placeholder="e.g. Show all employees whose salary is greater than 50000"
+                rows="4"
+            ></textarea>
+
+            <!-- Example chips -->
+            <div class="example-chips">
+                <span class="chip-label">Try:</span>
+                <button class="chip" data-question="Show all employees">Show all employees</button>
+                <button class="chip" data-question="Show employees older than 30">Older than 30</button>
+                <button class="chip" data-question="Show employees working in HR">HR department</button>
+                <button class="chip" data-question="Show employees earning more than 60000">Salary &gt; 60k</button>
+                <button class="chip" data-question="Count total employees">Count employees</button>
+                <button class="chip" data-question="Average salary of employees">Average salary</button>
+                <button class="chip" data-question="Sort employees by salary in descending order">Sort by salary</button>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="btn-group">
+                <button id="btn-generate" class="btn btn-primary">
+                    <span class="btn-icon">🚀</span>
+                    Generate SQL
+                </button>
+                <button id="btn-clear" class="btn btn-ghost">
+                    <span class="btn-icon">🗑️</span>
+                    Clear
+                </button>
+            </div>
+        </section>
+
+        <!-- SQL output card (hidden until SQL is generated) -->
+        <section class="card sql-card hidden" id="sql-section">
+            <h2 class="card-title">
+                <span class="card-icon">🧠</span>
+                Generated SQL
+            </h2>
+            <pre id="sql-output" class="sql-output"></pre>
+            <div class="btn-group">
+                <button id="btn-execute" class="btn btn-accent">
+                    <span class="btn-icon">▶️</span>
+                    Execute SQL
+                </button>
+                <button id="btn-copy" class="btn btn-outline">
+                    <span class="btn-icon">📋</span>
+                    Copy SQL
+                </button>
+            </div>
+        </section>
+
+        <!-- Results card (hidden until query is executed) -->
+        <section class="card results-card hidden" id="results-section">
+            <h2 class="card-title">
+                <span class="card-icon">📊</span>
+                Query Results
+                <span id="row-count" class="badge"></span>
+            </h2>
+            <div class="table-wrapper">
+                <table id="results-table">
+                    <thead id="results-head"></thead>
+                    <tbody id="results-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Error message (hidden by default) -->
+        <section class="card error-card hidden" id="error-section">
+            <h2 class="card-title">
+                <span class="card-icon">⚠️</span>
+                Error
+            </h2>
+            <p id="error-message"></p>
+        </section>
+
+        <!-- Loading overlay -->
+        <div class="loading-overlay hidden" id="loading">
+            <div class="spinner"></div>
+            <p id="loading-text">Generating SQL…</p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with <span class="heart">❤️</span> using FastAPI &amp; Groq LLM</p>
+        </footer>
+    </div>
+
+    <!-- App script -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
