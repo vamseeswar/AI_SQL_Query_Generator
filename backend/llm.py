@@ -27,6 +27,10 @@ def _get_client() -> Groq:
     """Lazy-initialise and return the Groq client."""
     global _client
     if _client is None:
+        # Clear proxy environment variables to prevent httpx constructor bugs on Render
+        for proxy_key in ["HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"]:
+            os.environ.pop(proxy_key, None)
+
         api_key = os.getenv("GROQ_API_KEY")
         if not api_key:
             raise ValueError(
