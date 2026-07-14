@@ -244,3 +244,38 @@ questionInput.addEventListener("keydown", (e) => {
         generateSQL();
     }
 });
+
+// ---------------------------------------------------------------------------
+// Theme Management — Dark (Default) 🌙 | Light ☀️
+// ---------------------------------------------------------------------------
+(function initTheme() {
+    const STORAGE_KEY = "sql-qg-theme";
+    const btnToggle   = document.getElementById("btn-theme-toggle");
+    if (!btnToggle) return;
+
+    /** Apply theme choice. */
+    function applyTheme(theme) {
+        if (theme === "light") {
+            document.documentElement.setAttribute("data-theme", "light");
+            btnToggle.textContent = "🌙"; // Show moon icon in light mode
+            btnToggle.title = "Switch to Dark Mode";
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+            btnToggle.textContent = "☀️"; // Show sun icon in dark mode
+            btnToggle.title = "Switch to Light Mode";
+        }
+        try { localStorage.setItem(STORAGE_KEY, theme); } catch (_) {}
+    }
+
+    // Toggle theme on click
+    btnToggle.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+        const next = current === "light" ? "dark" : "light";
+        applyTheme(next);
+    });
+
+    // Restore saved preference (default: dark)
+    let saved = "dark";
+    try { saved = localStorage.getItem(STORAGE_KEY) || "dark"; } catch (_) {}
+    applyTheme(saved);
+})();
